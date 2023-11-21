@@ -1,6 +1,12 @@
 import java.util.*;
 public class GeneticAlgorithm {
 
+    /**
+     * Creates a population of Snake objects with the specified size.
+     *
+     * @param size The size of the population.
+     * @return An array of Snake objects representing the population.
+     */
     public static Snake[] createPopulation(int size)
     {
         Snake[] snakeArray = new Snake[size];
@@ -10,11 +16,21 @@ public class GeneticAlgorithm {
         return snakeArray;
     }
 
-    // sorts snakes by fitness (in descending order)
+    /**
+     * Sorts an array of Snake objects by fitness in descending order.
+     *
+     * @param array The array of Snake objects to be sorted.
+     */
     public static void sortSnakes(Snake[] array){
         Arrays.sort(array, (Snake a, Snake b) -> b.fitness - a.fitness);
     }
 
+    /**
+     * Selects a random parent Snake from an array based on fitness.
+     *
+     * @param array The array of Snake objects to choose a parent from.
+     * @return A randomly selected Snake object.
+     */
     public static Snake selectRandomParent(Snake[] array){
         int fitnessSum = 0;
         for (Snake value : array) {
@@ -33,6 +49,13 @@ public class GeneticAlgorithm {
     }
 
 
+    /**
+     * Creates a child Snake by combining genes from two parent Snakes.
+     *
+     * @param parent1 The first parent Snake.
+     * @param parent2 The second parent Snake.
+     * @return A new Snake representing the child.
+     */
     public static Snake createChild(Snake parent1, Snake parent2){
         Snake child = new Snake();
         child.brain.architecture = parent1.brain.architecture;
@@ -55,11 +78,24 @@ public class GeneticAlgorithm {
 
     }
 
+    /**
+     * Integrates an array of children Snakes into a population.
+     *
+     * @param children   The array of child Snakes.
+     * @param population The array representing the population to integrate the children into.
+     */
     public static void integrateChildren(Snake[] children, Snake[] population){
         System.arraycopy(children, 0, population, 0, children.length);
     }
 
-    // crossover rate is roughly the percentage of genes that each parent will have in the resultant child
+    /**
+     * Performs uniform crossover on the genes of two parent Snakes.
+     *
+     * @param parent1Genes   The genes of the first parent Snake.
+     * @param parent2Genes   The genes of the second parent Snake.
+     * @param crossoverRate  The percentage of genes each parent contributes to the child.
+     * @return An array representing the genes of the resulting child Snake.
+     */
     public static double[] uniformCrossover(double[] parent1Genes, double[] parent2Genes, double crossoverRate){
         double[] childGenes = new double[parent1Genes.length];
 
@@ -76,12 +112,16 @@ public class GeneticAlgorithm {
         return childGenes;
     }
 
+
+    /**
+     * Performs k-point crossover on the genes of two parent Snakes.
+     *
+     * @param parent1Genes The genes of the first parent Snake.
+     * @param parent2Genes The genes of the second parent Snake.
+     * @param k            The number of crossover points.
+     * @return An array representing the genes of the resulting child Snake.
+     */
     public static double[] kPointCrossover(double[] parent1Genes, double[] parent2Genes, int k){
-        // k point means 5 different partitions
-        // example 3 point
-        // 0-p1 p1-p2 p2-p3 p3-n
-        // we need array of 3 points and array length
-        // also method to swap elements in section of array
         int[] points = new int[k + 2];
         points[0] = 0;
         points[k+1] = parent1Genes.length;

@@ -2,22 +2,34 @@ import java.util.Arrays;
 
 public class NeuralNetwork {
 
-
+    /** The weights between layers in the neural network. */
     double[][][] weights;
+
+    /** The nodes (neurons) in each layer of the neural network. */
     double[][] nodes;
 
+    /** The architecture of the neural network, specifying the number of nodes in each layer. */
     int[] architecture;
 
+    /** Enumeration representing different activation functions. */
 
     enum ActivationFunction{
         SIGMOID, TANH, RELU, SOFTMAX
     }
 
+
+    /** The activation function used for hidden layers. */
     ActivationFunction layerActivation = ActivationFunction.RELU;
 
+    /** The activation function used for the output layer. */
     ActivationFunction outputActivation = ActivationFunction.SIGMOID;
 
 
+    /**
+     * Constructor for the NeuralNetwork class.
+     *
+     * @param arch The architecture of the neural network, specifying the number of nodes in each layer.
+     */
     public NeuralNetwork(int[] arch)
     {
         architecture = arch;
@@ -45,6 +57,9 @@ public class NeuralNetwork {
         setRandomWeights();
     }
 
+    /**
+     * Initializes the weights with random values within a specified range.
+     */
     public void setRandomWeights(){
         int minWeight = SnakeGame.weightRange[0];
         int maxWeight = SnakeGame.weightRange[1];
@@ -58,6 +73,10 @@ public class NeuralNetwork {
         }
     }
 
+
+    /**
+     * Performs forward propagation through the neural network.
+     */
     public void forwardPropagation(){
         // if we have 3 layers, we propagate twice, since there are 2 sets of weights
         for (int i = 0; i < weights.length; i++)
@@ -81,16 +100,32 @@ public class NeuralNetwork {
     }
 
 
-
+    /**
+     * Applies the sigmoid activation function to a given value.
+     *
+     * @param num The input value.
+     * @return The result of the sigmoid activation function.
+     */
     public static double sigmoid(double num){
            return 1 / (1 + Math.exp(-1 * num));
     }
 
+    /**
+     * Applies the hyperbolic tangent (tanh) activation function to a given value.
+     *
+     * @param num The input value.
+     * @return The result of the tanh activation function.
+     */
     public static double tanh(double num){
        return Math.tanh(num);
     }
 
-
+    /**
+     * Applies the softmax activation function to an array of values.
+     *
+     * @param array The input array.
+     * @return The result of the softmax activation function.
+     */
     public double[] softmax(double[] array)
     {
         double sum = 0;
@@ -108,10 +143,22 @@ public class NeuralNetwork {
 
     }
 
+    /**
+     * Applies the rectified linear unit (ReLU) activation function to a given value.
+     *
+     * @param num The input value.
+     * @return The result of the ReLU activation function.
+     */
     public double relu(double num){
         return Math.max(num,0);
     }
 
+    /**
+     * Converts a 3D tensor to a 1D vector.
+     *
+     * @param tensor The input tensor.
+     * @return The resulting 1D vector.
+     */
     public static double[] tensorToVector(double[][][] tensor){
         // flattens the tensor into a vector (3D array to 1D array)
         int elementsInTensor = 0;
@@ -135,6 +182,11 @@ public class NeuralNetwork {
         return newVector;
     }
 
+    /**
+     * Exports the architecture and weight vector of the neural network.
+     *
+     * @return A string containing the architecture and weight vector.
+     */
     public String exportWeightVector(){
         // exports architecture and weight vector
         String arc = Arrays.toString(architecture);
@@ -142,7 +194,11 @@ public class NeuralNetwork {
         return arc + wei;
     }
 
-
+    /**
+     * Imports the architecture and weight vector into the neural network.
+     *
+     * @param vector The string containing the architecture and weight vector.
+     */
     public void importWeightVector(String vector){
         String archString = vector.substring(vector.indexOf('[') + 1, vector.indexOf(']'));
         String[] archStringArray = archString.split(", ");
@@ -155,7 +211,14 @@ public class NeuralNetwork {
         weights = vectorToTensor(weightVector,architecture);
     }
 
-    // given a 1d list of weights, and the architecture, turn a vector into a matrix
+
+    /**
+     * Converts a 1D vector and architecture to a 3D tensor.
+     *
+     * @param vector      The input vector.
+     * @param architecture The architecture of the neural network.
+     * @return The resulting 3D tensor.
+     */
     public static double[][][] vectorToTensor(double[] vector, int[] architecture){
         // 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20
         // [1,2,3,4]

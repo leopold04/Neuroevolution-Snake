@@ -1,3 +1,8 @@
+/**
+ * The Snake class represents the snake in the Snake Game.
+ * It manages the snake's position, movement, collision detection,
+ * and provides methods for handling neural network inputs.
+ */
 public class Snake {
 
       int x[] = new int[SnakeGame.GAME_UNITS];
@@ -32,7 +37,11 @@ public class Snake {
 
     double[] outputs;
 
-
+    /**
+     * Constructs a new Snake object. Initializes neural network inputs and outputs.
+     * If random starting position is enabled, sets a random initial position;
+     * otherwise, sets the position at the center of the game board.
+     */
     public Snake(){
         // our inputs are the first layer of our nodes matrix
         // we can just create a reference to that array and edit it here. if porting to another language, just edit brain.nodes[0] directly
@@ -52,6 +61,9 @@ public class Snake {
 
     }
 
+    /**
+     * Sets the neural network inputs based on the snake's current state.
+     */
     public void setInputs(){
         // our inputs are the first layer of our nodes matrix
         // we can just create a reference to that array and edit it here. if porting to another language, just edit brain.nodes[0] directly
@@ -153,6 +165,12 @@ public class Snake {
 
     }
 
+    /**
+     * Sets the snake's position to the specified coordinates.
+     *
+     * @param xP The x-coordinate.
+     * @param yP The y-coordinate.
+     */
     public void setPosition(int xP, int yP)
     {
         for (int i = 0; i < x.length; i++){
