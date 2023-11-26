@@ -69,8 +69,9 @@ public class Snake {
         // we can just create a reference to that array and edit it here. if porting to another language, just edit brain.nodes[0] directly
         // larger numbers in this case respond to a greater urgency to act
 
-        // Input Scheme 1
-        /*
+
+        if (SnakeGame.INPUT_SCHEME == 1)
+        {
         inputs[0] = 1 - (y[0] / gameHeight);
         inputs[1] = 1 - ((gameHeight - y[0]) / gameHeight);
         inputs[2] = (x[0] / gameWidth);
@@ -85,11 +86,11 @@ public class Snake {
         inputs[11] = (direction == 'L') ? 1 : 0;
         inputs[12] = (direction == 'U') ? 1 : 0;
         inputs[13] = (direction == 'D') ? 1 : 0;
+        }
 
-         */
 
-/*
-
+        if (SnakeGame.INPUT_SCHEME == 2)
+        {
         // Input Scheme 2
         // detecting if the snake is right next to a wall
         inputs[0] =  y[0] == 0 ? 1 : 0;
@@ -104,41 +105,31 @@ public class Snake {
         // apple left or right and up or down
         inputs[8] = y[0] - apple.y > 0 ? 1 : -1;
         inputs[9] = apple.x - x[0] > 0 ? 1 : -1;
-        // direction
-      // inputs[10] = (direction == 'R') ? 1 : 0;
-       // inputs[11] = (direction == 'L') ? 1 : 0;
-        //inputs[12] = (direction == 'U') ? 1 : 0;
-       // inputs[13] = (direction == 'D') ? 1 : 0;
-
-/*
+        }
 
 
-// Input Scheme 3
-        /*
+        if (SnakeGame.INPUT_SCHEME == 3)
+        {
         inputs[0] = Math.min(northTail(), y[0] + unit_size) == unit_size ? 1 : 0;
         inputs[1] = Math.min(southTail(), gameHeight - y[0]) == unit_size ? 1 : 0;
         inputs[2] = Math.min(westTail(),x[0]) <= unit_size ? 1 : 0;
         inputs[3] = Math.min(eastTail(), gameWidth - x[0]) <= unit_size ? 1 : 0;
         inputs[4] = y[0] - apple.y > 0 ? 1 : -1;
         inputs[5] = apple.x - x[0] > 0 ? 1 : -1;
+        }
 
-         */
 
-        /*
-
-        // Input Scheme 4
-          inputs[0] = (1 - (Math.min(northTail(),y[0]) / gameHeight));
+        if (SnakeGame.INPUT_SCHEME == 4)
+        {
+        inputs[0] = (1 - (Math.min(northTail(),y[0]) / gameHeight));
         inputs[1] = (1 - (Math.min(southTail(),gameHeight - y[0]) / gameHeight));
         inputs[2] = (1 - (Math.min(westTail(),x[0]) / gameWidth));
         inputs[3] = (1 - (Math.min(eastTail(),gameWidth - x[0]) / gameWidth));
         inputs[4] = y[0] - apple.y > 0 ? 1 : -1;
         inputs[5] = apple.x - x[0] > 0 ? 1 : -1;
+        }
 
-
-
-         */
-
-
+/*
         // encoded
         // 3x3 box around snake
         // apple xy
@@ -159,10 +150,7 @@ public class Snake {
     inputs[square + 1] = apple.y < y[0] ? 1 : -1;
 
 
-
-
-
-
+ */
     }
 
     /**
